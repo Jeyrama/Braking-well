@@ -37,3 +37,18 @@ Notes:
 
 
 // Solution
+
+function dist(v, mu) {								    // suppose reaction time is 1
+  let g = 9.81; 									      // acceleration due to gravity in m/s
+  let coef = 1000.0 / 3600.0; 					// km/h -> m/s
+  let dreact = v * coef; 							  // distance of reaction with t = 1
+  let vms = coef * v; 							    // speed in m/s
+  let dbrak = 0.5 * Math.pow(vms, 2) / mu / g; 	// braking distance
+  return dreact + dbrak; 							  // total distance
+}
+
+function speed(d, mu) {								    // suppose reaction time is 1
+  let g = 9.81; 									      // acceleration due to gravity in m/s
+  let coef = 3600 / 1000.0;						  // m/s -> km/h
+  return 0.5 * mu * g * (- 2 + Math.sqrt(4 + 8*d/mu/g)) * coef;
+}
