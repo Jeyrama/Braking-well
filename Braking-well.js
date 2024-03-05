@@ -34,3 +34,6 @@ Notes:
   Don't forget the reaction time t: t = 1
   Don't truncate or round your results. 
 */
+
+
+// Solution
