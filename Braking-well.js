@@ -38,7 +38,7 @@ Notes:
 
 // Solution
 
-function dist(v, mu) {								    // suppose reaction time is 1
+function dist(v, mu) {								  // suppose reaction time is 1
   let g = 9.81; 									      // acceleration due to gravity in m/s
   let coef = 1000.0 / 3600.0; 					// km/h -> m/s
   let dreact = v * coef; 							  // distance of reaction with t = 1
@@ -47,10 +47,45 @@ function dist(v, mu) {								    // suppose reaction time is 1
   return dreact + dbrak; 							  // total distance
 }
 
-function speed(d, mu) {								    // suppose reaction time is 1
+function speed(d, mu) {								  // suppose reaction time is 1
   let g = 9.81; 									      // acceleration due to gravity in m/s
   let coef = 3600 / 1000.0;						  // m/s -> km/h
   return 0.5 * mu * g * (- 2 + Math.sqrt(4 + 8*d/mu/g)) * coef;
 }
 
 // or
+
+function dist(v, mu) {			// suppose reaction time is 1
+  const g = 9.81;
+  v = convertKPHtoMPS(v);
+  return (v*v/(2*mu*g)) + v;
+  // We're given that distance = v*v / 2*mu*g;
+  // Since reaction time is a single second, we add a constant
+}
+
+function speed(d, mu) {		  // suppose reaction time is 1
+  /*As above, we know that d = (v*v / (2*mu*g)) + v;
+  Let's call 2*mu*g q, since it's a constant and c means something special in physics.
+  d = (v*v / q) + v
+  d - v = v*v / q
+  dq - vq = v*v
+  v^2 + vq - dq = 0
+  and now we can apply the quadratic formula:
+  v = (-q +- sqrt(q^2 - 4(1)(-qd))) / 2;
+  v = (-q +- sqrt(q*q + 4*q*d)) / 2;
+  */
+  const g = 9.81;
+  const q = 2*mu*g;
+  return convertMPStoKPH((-q + Math.sqrt((q*q) + 4*q*d)) / 2); //We're assuming a positive distance, of course.
+  //We're also assuming a sensible input.
+  //This kind of problem will have a positive root and a negative root, so we can just take the positive root
+  //Without bothering to check the negative root. Consequently, you can't represent driving backwards with this.
+}
+
+function convertMPStoKPH(metersPerSecond){
+  return metersPerSecond*3.6;
+}
+
+function convertKPHtoMPS(kilometersPerHour){
+  return kilometersPerHour/3.6;
+}
