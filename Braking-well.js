@@ -52,3 +52,5 @@ function speed(d, mu) {								    // suppose reaction time is 1
   let coef = 3600 / 1000.0;						  // m/s -> km/h
   return 0.5 * mu * g * (- 2 + Math.sqrt(4 + 8*d/mu/g)) * coef;
 }
+
+// or
